@@ -11,7 +11,11 @@ const server = http
 
     switch (req.method) {
       case 'GET':
-        if (req.url === '/enquetes/yaki-tofu') {
+        if (req.url === '/') {
+          res.write(pug.renderFile('./top.pug', {}));
+        } else if (req.url === '/enquetes') {
+          res.write(pug.renderFile('./enquetes.pug', {}));
+        } else if (req.url === '/enquetes/yaki-tofu') {
           res.write(
             pug.renderFile('./form.pug', {
               path: req.url,
@@ -64,7 +68,7 @@ const server = http
   .on('clientError', e => {
     console.error(`[${new Date()}] Client Error`, e);
   });
-const port = 8000;
+const port = process.env.port || 8000;
 server.listen(port, () => {
   console.info(`[${new Date()}] Listening on ${port}`);
 });
